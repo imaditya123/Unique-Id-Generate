@@ -4,7 +4,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myspring.uniqueidgenerator.Service.IdGeneratorService;
+import com.myspring.uniqueidgenerator.Algorithm.DatabaseSequence;
+import com.myspring.uniqueidgenerator.Algorithm.SnowflakeIdGenerator;
+import com.myspring.uniqueidgenerator.Algorithm.TimestampRandom;
+import com.myspring.uniqueidgenerator.Algorithm.UUIDGenerator;
 
 import lombok.RequiredArgsConstructor;
 
@@ -13,16 +16,31 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class IdGeneratorController {
 	
-	private final IdGeneratorService service;
+	private final DatabaseSequence databaseSequece;
+	private final TimestampRandom timestampRandom;
+	private final SnowflakeIdGenerator snowflakeIdGenerator;
+	private final UUIDGenerator uuidGenerat;
 	
-	@GetMapping("/generateId")
+	
+	
+	@GetMapping("/timestamp+random")
 	public String getGenerateId() {
-		return service.generateUniqueId();
+		return timestampRandom.generateUniqueId();
 	}
 	
-	@GetMapping("/generateUUID")
+	@GetMapping("/builtIn-UUID")
 	public String getGenerateUUId() {
-		return service.generateUUID();
+		return uuidGenerat.generateUUID();
+	}
+	
+	@GetMapping("/snowflakeIdGenerator")
+	public String getSnowflakeIdGenerator() {
+		return  snowflakeIdGenerator.generateUniqueId();
+	}
+	
+	@GetMapping("/databaseSequece")
+	public String getDatabaseSequece() {
+		return  databaseSequece.generateDatabaseSequenceId();
 	}
 
 }
